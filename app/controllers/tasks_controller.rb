@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :find_task, only: [:show, :edit, :update, :desrtoy]
+  before_action :find_task, only: [:show, :edit, :update, :destroy]
 
   def index
     @tasks = Task.all.order("created_at DESC")
@@ -22,6 +22,19 @@ class TasksController < ApplicationController
   end
 
   def edit
+  end
+
+  def update
+    if @task.update(task_params)
+      redirect_to task_path(@task)
+    else
+      render 'edit'
+    end
+  end
+
+  def destroy
+    @task.destroy
+    redirect_to root_path
   end
 
   private
